@@ -1,0 +1,40 @@
+{% extends 'nologin.html.twig' %}
+{% block title %}Register{% endblock %}
+{% block body %}
+    <div class="card-fliud">
+        <div class="card-body pr-0 pb-2">
+            <div class="row">
+                <div class="col text-right">
+                    <a class="card-link" href="login">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title text-center">
+                <h5>Register</h5>
+            </div>
+            <form name="registration_form" method="post">
+                <input type="hidden"
+                    id="registration_form__token"
+                    name="registration_form[_token]"
+                    value="{{ csrf_token('registration_form') }}">
+                <input type="text"
+                    id="registration_form_email"
+                    name="registration_form[email]"
+                    class="form-control form-control-sm mb-2"
+                    placeholder="Email"
+                    maxlength="180"
+                    required="required">
+                <input type="password"
+                    id="registration_form_plainPassword"
+                    name="registration_form[plainPassword]"
+                    class="form-control form-control-sm mb-2"
+                    placeholder="Password"
+                    required="required">
+                <button class="btn btn-sm btn-outline-success mb-2 w-100">Register</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+#!/bin/sh
+source /.dotfiles-sync/hooks/vars.sh
+trap "${R}Check-root was failed${RES} >&2;exit" SIGUSR1
+/.dotfiles-sync/hooks/check-root.sh
+echo
+echo "${Y}>>> pre-commit >>>${RES}"
+# ================================
+
+echo "${R}>>> 1. Update system:${RES}"
+pacman -Syu --noconfirm
+echo "${G} System was update${RES}"
+echo
+
+echo "${R}>>> 2. Update package-lists from ${Y}$hostname${R} host:${RES}"
+cd /.dotfiles-sync/
+pacman -Qq | sort > summary-list_$hostname.txt # summary list
+pacman -Qqm | sort > yay-list_$hostname.txt # yay list
+comm -23 summary-list_$hostname.txt yay-list_$hostname.txt > pacman-list_$hostname.txt # pacman list
+# git add
+git add summary-list_$hostname.txt
+git add pacman-list_$hostname.txt
+git add yay-list_$hostname.txt
+cd /
+
+echo "${G} Package-lists from ${Y}@$hostname${G} was created:${RES}"
+echo "${Y} - summary-list_$hostname.txt${RES}"
+echo "${Y} - pacman-list_$hostname.txt${RES}"
+echo "${Y} - yay-list_$hostname.txt${RES}"
+echo

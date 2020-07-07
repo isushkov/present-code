@@ -1,0 +1,66 @@
+<table class="table table-sm table-bordered table-hover">
+    <thead>
+        <tr class="b-pr">
+            <th colspan="2"><p class="m-0 text-center">Budget now</p></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td data-row="1">
+                Turn
+            </td>
+            <td data-row="1">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <span class="amount">
+                            {{ budget.tih }}
+                        </span>
+                        <input class="form-control form-control-sm hidden tih" type="text" value="{{ budget.tih }}"/>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-outline-warning btn-sm budget-edit">Edit</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm hidden budget-cancel mx-2">Cancel</button>
+                        <button type="button" class="btn btn-outline-success btn-sm hidden budget-submit">Submit</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td data-row="2">
+                Reserve
+            </td>
+            <td data-row="2">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <span class="amount c-success">
+                            {{ budget.hl }}
+                        </span>
+                        <input class="form-control form-control-sm hidden hl" type="text" value="{{ budget.hl }}"/>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <button type="button" class="btn btn-outline-warning btn-sm budget-edit">Edit</button>
+                        <button type="button" class="btn btn-outline-danger btn-sm hidden budget-cancel mx-2">Cancel</button>
+                        <button type="button" class="btn btn-outline-success btn-sm hidden budget-submit">Submit</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td data-row="3">
+                Free money
+            </td>
+            <td data-row="3">
+                <div class="d-flex justify-content-between">
+                    <span class="c-{{ hronos.maxCritDay.typeCrit }}">
+                        {{ hronos.freeMoney }}
+                    </span>
+                    next: {{ hronos.maxCritDay.currentUnixTime|date('d.m') }}
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,58 @@
+<table class="table table-sm table-bordered">
+    <!-- {{ dump(hronos.criticallyDaysRender) }} -->
+    <thead>
+        <tr class="b-pr">
+            <th colspan="4"><p class="m-0 text-center">Conclusion 1 month</p></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Date</th>
+            <th>Turn</th>
+            <th>Reserve</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Start</td>
+            <td>{{ hronos.startUnixTime|date('d.m') }}</td>
+            <td>{{ hronos.startTih }}</td>
+            <td>{{ hronos.startHl }}</td>
+        </tr>
+        {% set row = 1 %}
+        {% for critically in hronos.criticallyDaysRender %}
+            <tr>
+                {% if loop.first %}
+                    <td rowspan="{{ hronos.criticallyDaysRender|length }}"
+                        data-row="{{ row }}">
+                        Crit
+                    </td>
+                {% endif %}
+                <td data-row="{{ row }}"
+                    class="table-{{ critically.typeCrit }}">
+                        {{ critically.currentUnixTime|date('d.m') }}
+                </td>
+                <td class="table-{{ critically.typeCrit }}"
+                    colspan="2"
+                    data-row="{{ row }}">
+                        {{ critically.summary }}
+                </td>
+            </tr>
+            {% set row = row + 1 %}
+        {% endfor %}
+        <tr>
+            <td>End</td>
+            <td>{{ hronos.endUnixTime|date('d.m') }}</td>
+            <td>{{ hronos.endTih }}</td>
+            <td>{{ hronos.endHl }}</td>
+        </tr>
+        <tr>
+            <td>Max crit</td>
+            <td class="table-{{ hronos.maxCritDay.typeCrit }}">
+                {{ hronos.maxCritDay.currentUnixTime|date('d.m') }}
+            </td>
+            <td colspan="2" class="table-{{ hronos.maxCritDay.typeCrit }}">
+                {{ hronos.maxCritDay.summary }}
+            </td>
+        </tr>
+    </tbody>
+</table>

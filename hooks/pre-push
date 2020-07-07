@@ -1,0 +1,7 @@
+#!/bin/sh
+source /.dotfiles-sync/hooks/vars.sh
+trap "${R}Check-root was failed${RES} >&2;exit" SIGUSR1
+/.dotfiles-sync/hooks/check-root.sh
+echo
+echo "${Y}>>> pre-push >>>>>>>>>>>${RES}"
+# ================================

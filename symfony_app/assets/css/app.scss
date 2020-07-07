@@ -1,0 +1,124 @@
+// customize some Bootstrap variables
+// $primary: darken(#428bca, 20%);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
+@import "bootstrap-dark.min";
+
+::selection {
+    color: #7effb4;
+    background: #7effb430;
+}
+* {
+  scrollbar-color: #32383e #111;
+  border-radius: 0 !important;
+}
+.hidden {
+    display: none;
+}
+.form-control {
+    background-color: #272b30;
+    border: 1px solid #141619;
+}
+.form-control:focus {
+    color: #63696F;
+    background-color: #1d2024;
+    border-color: #090909;
+}
+
+// =======
+$b-pr: #272b30;
+$b-pr-dark: #1b1e22;
+$b-pr-lite: #32383e;
+$c-success: #96e35b;
+$b-success: #2b370e;
+$c-warning: #ffdd64;
+$b-warning: #372e0e;
+$c-danger: #ff4949;
+$b-danger: #37100e;
+
+.b-pr { background: $b-pr; }
+.b-pr-dark { background: $b-pr-dark; }
+.b-pr-lite { background: $b-pr-lite; }
+
+.c-success { color: $c-success; }
+.b-success { background: $b-success; }
+.success {
+    color: $c-success;
+    background: $b-success;
+}
+
+.c-warning { color: $c-warning; }
+.b-warning { background: $b-warning; }
+.warning {
+    color: $c-warning;
+    background: $b-warning;
+}
+
+.c-danger { color: $c-danger; }
+.b-danger { background: $b-danger; }
+.danger {
+    color: $c-danger;
+    background: $b-danger;
+}
+
+table {
+    thead {
+        background: #1b1e22;
+    }
+    tbody {
+        background: #272b30;
+    }
+    .incomes {
+        color: #0f0;
+    }
+    .expenses {
+        color: #f00;
+    }
+    .table-success {
+        color: $c-success;
+        background: $b-success;
+    }
+    .table-warning {
+        color: $c-warning;
+        background: $b-warning;
+    }
+    .table-danger {
+        color: $c-danger;
+        background: $b-danger;
+    }
+    .table-title {
+        background: $b-pr;
+    }
+}
+
+.table-hover {
+    tbody tr:hover td, .table-hover tbody tr:hover th, .t-hover {
+        background: #1f2226;
+    }
+    .table-warning:hover {
+        color: lighten($c-warning, 3%);
+        background: darken($b-warning, 5%);
+    }
+    .table-danger:hover {
+        color: lighten($c-danger, 3%);
+        background: darken($b-danger, 5%);
+    }
+    .table-success:hover {
+        color: lighten($c-success, 3%);
+        background: darken($b-success, 5%);
+    }
+
+    .t-warning-hover {
+        color: lighten($c-warning, 3%);
+        background: darken($b-warning, 5%);
+    }
+    .t-danger-hover {
+        color: lighten($c-danger, 3%);
+        background: darken($b-danger, 5%);
+    }
+    .t-success-hover {
+        color: lighten($c-success, 3%);
+        background: darken($b-success, 5%);
+    }
+}

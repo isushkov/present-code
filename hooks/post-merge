@@ -1,0 +1,110 @@
+#!/bin/sh
+source /.dotfiles-sync/hooks/vars.sh
+trap "${R}Check-root was failed${RES} >&2;exit" SIGUSR1
+/.dotfiles-sync/hooks/check-root.sh
+echo
+echo "${Y}>>> post-merge >>>${RES}"
+# ================================
+
+# echo "${R}>>> 1. Update git hooks:${RES}"
+# cp -r /.dotfiles-sync/hooks/orig-hooks/* /.git/hooks/
+# echo "${G} Git hooks was updated${RES}"
+# echo
+
+echo "${R}>>> 2. Check YAY and YAOURT:${RES}"
+echo "${R}>>> 2.a. Check YAY:${RES}"
+x=`pacman -Qs yay`
+if [ -n "$x" ]
+    then
+        echo "${G} YAY ${Y}installed${G} - ok${RES}"
+    else
+        echo "${R} YAY ${Y}not installed${G} - bad${RES}"
+        echo "${R} Install YAY:${RES}"
+        pacman -S --noconfirm git
+        # === start change user ===============
+        # PLEASE CHOISE USER FROM YAY
+        # CAT /ETC/PASSWD | GREP '/HOME/' | CUT -D: -F1
+        # CD USER DIR
+        sudo -i -u mxs bash << EOF
+            echo -n "${R} Current user: ${Y}"; whoami; echo -n "${RES}"
+            cd /home/mxs
+            git clone https://aur.archlinux.org/yay.git
+            cd /home/mxs/yay
+            makepkg -si
+            cd /home/mxs/
+            rm -rf yay/
+EOF
+        # === end change user ===============
+        echo -n "${R} Current user: ${Y}"; whoami; echo -n "${RES}"
+        cd /
+fi
+echo "${R}>>> 2.b. Check YAOURT:${RES}"
+x=`pacman -Qs yaourt`
+if [ -n "$x" ]
+    then
+        echo "${R} YAOURT ${Y}installed${R} - bad${RES}"
+        echo "${R} Remove YAOURT:${RES}"
+        pacman -R --noconfirm yaourt
+        echo "${G} YAOURT was deleted${RES}"
+    else
+        echo "${G} YAOURT ${Y}not installed${G} - ok${RES}"
+fi
+echo
+
+echo "${R}>>> 3. Sync system with all computers:${RES}"
+    echo "${R}>>> 3.a. PACMAN sync:${RES}"
+    # CHECK NOTICE --NEEDED MESSAGE
+    pacman -S --noconfirm --needed $(cat /.dotfiles-sync/pacman-list_*.txt)
+    echo "${G} pacman was sync${RES}"
+    echo
+    echo "${R}>>> 3.b. YAY sync:${RES}"
+    echo "${R}SKIP${RES}"
+#     # === start change user ===============
+#     # PLEASE CHOISE USER FROM YAY
+#     # CAT /ETC/PASSWD | GREP '/HOME/' | CUT -D: -F1
+#     # CD USER DIR
+#     # CHECK REPIT PAKAGES
+#     sudo -i -u mxs bash << EOF
+# 	echo -n "${R} Current user: ${Y}"; whoami; echo -n "${RES}"
+# 	yay -Syy
+# 	yay -S $(cat /.dotfiles-sync/yay-list_*.txt)
+# EOF
+#     # === end change user ===============
+#     echo "${G} YAY was sync${RES}"
+#     echo -n "${R} Current user: ${Y}"; whoami; echo -n "${RES}"
+#     cd /
+
+echo "${G} System was sync${RES}"
+echo
+
+echo "${R}>>> 4. Update system:${RES}"
+pacman -Syu --noconfirm
+echo "${G} System was update${RES}"
+echo
+
+# check fish-shell
+    # set fish shell
+# check fish as default
+    # set fish as default
+
+# check omf
+    # cd $HOME
+    # install omf
+# else 
+    # omf doctor
+
+# nvim install Plug
+# nvim doctor
+
+echo "${R}>>> 5. Check owners:${RES}"
+echo "${R}>>>   5.a Check owners: ${Y}root${RES}"
+chown -R root:root /root
+echo "${G}        - Check owners: ${Y}root${G} - success${RES}"
+echo "${R}>>>   5.a Check owners: ${Y}mxs${RES}"
+chown -R mxs:users /home/mxs
+echo "${G}        - Check owners: ${Y}mxs${G} - success${RES}"
+echo "${G}    Check owners - success${RES}"
+echo
+echo "${G}-----------------------${RES}"
+echo "${G} System ready${RES}"
+echo "${G}-----------------------${RES}"

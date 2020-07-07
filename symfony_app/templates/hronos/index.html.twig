@@ -1,0 +1,78 @@
+{% extends 'login.html.twig' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="card w-100">
+        <div class="row m-3">
+            <div class="col p-0">
+
+<table class="table table-sm table-bordered table-hover" data-ident="transaction">
+    <thead>
+        <tr class="b-pr">
+            <th colspan="3"><p class="m-0 text-center">Hronos</p></th>
+        </tr>
+        <tr>
+            <th scope="col-2">Date</th>
+            <th scope="col-2">Turn</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set row = 1 %}
+        {% for hronosDay in hronos.hronosDays %}
+            {% set subRow = 1 %}
+            {% for hronosDayItem in hronosDay.hronosDayItems %}
+                <tr>
+                    {% if loop.first %}
+                        <td data-row="{{ row }}"
+                            rowspan="{{ hronosDay.countRows }}">
+                            {{ hronosDay.currentDayRender }}
+                        </td>
+                    {% endif %}
+                    <td data-row="{{ row }}"
+                        data-sub-row="{{ subRow }}">
+                        {% if hronosDayItem.transType == 'expenses' %}
+                            <span class="c-danger">-{{ hronosDayItem.transAmount }}</span>
+                        {% elseif hronosDayItem.transType == 'incomes' %}
+                            <span class="c-success">+{{ hronosDayItem.transAmount - hronosDay.growHl }}</span>
+                            <span>(Reserve:<span class="c-success">+{{ hronosDay.growHl }}</span>)</span>
+                        {% endif %}
+
+                        {% if (hronosDay.multiplicity != 1) %}
+                            <span class="c-warning">x{{ hronosDay.multiplicity }}</span>
+                        {% endif %}
+
+                        ={{ hronosDayItem.summary }}
+
+                        {% if hronosDayItem.transType == 'incomes' %}
+                            (Reserve:<span class="c-success">{{ hronosDay.hl }}</span>)
+                        {% endif %}
+                    </td>
+                    <td data-row="{{ row }}"
+                        data-sub-row="{{ subRow }}">
+                        {{ hronosDayItem.transDescription }}
+                    </td>
+                    {% if loop.last %}
+                        <tr>
+                            <td data-row="{{ row }}"
+                                colspan="2"
+                                data-sub-row="{{ subRow +1 }}"
+                                {% if hronosDay.typeCrit != 'success' %}
+                                    class="table-{{ hronosDay.typeCrit }}"
+                                {% endif %}>
+                                {{ hronosDay.summary }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tr>
+                {% set subRow = subRow +1 %}
+            {% endfor %}
+            {% set row = row +1 %}
+        {% endfor %}
+    </tbody>
+</table>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

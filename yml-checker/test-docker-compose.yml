@@ -1,0 +1,88 @@
+version: '3.1'
+services:
+
+  # amq-broker72
+  redhat:
+    image: amq-broker72-stable
+    restart: 'no'
+    network_mode: "host"
+    volumes:
+      - /home/ilya/docker-composes/amq2adp/volumes/broker.xml:/home/jboss/broker/etc/broker.xml
+    ports:
+      - 61616:61616
+      - 5672:5672
+      - 8161:8161
+    environment:
+      - AMQ_USER=
+      - AMQ_PASSWORD=
+      # - PN_TRACE_FRM=1
+    # networks:
+    #   - test
+
+  srvcif_adp:
+    image: adapter
+    restart: 'no'
+    environment:
+      - TZ=Europe/Moscow
+      # - LOG_LEVEL_ENV=DEBUG
+      - ADAPTER_NAME_ENV=
+      - MAPPER_ENV=Worker
+
+      - AMQ_BROKERS_ENV=
+      # - AMQ_BROKERS_ENV=
+      - RECEIVER_QUEUE_ENV=
+      - ERROR_QUEUE_ENV=
+
+      - USER_ENV=
+      - PASSWORD_ENV=
+      # - USER_ENV=
+      # - PASSWORD_ENV=
+
+      # - SERVER_ADDRESS_ENV=127.0.0.1
+      # - SERVER_ADDRESS_ENV=
+      # - SERVER_PORT_ENV=
+      # - SCHEME_NAME_ENV=
+      # - SID_ENV=127.0.0.1
+      # - SID_ENV=
+      # - STORE_EXPTIME_ENV=0
+      # - STORE_USER_ENV=
+      # - STORE_PASSWORD_ENV=
+      # - OLOGGER_USER_ENV=
+      # - OLOGGER_PASSWORD_ENV=
+      # - OLOGGER_ADDRESS_ENV=
+      # - OLOGGER_SCHEME_ENV=
+      # - OLOGGER_SID_ENV=
+      # - OLOGGER_PORT_ENV=
+      # - STORAGE_AVAILABLE_ENV=
+      # - LOG_FILE_ENV=
+      # - LOGFILE_MAX_BYTES_ENV=25000000
+    command: ["python",  "/opt/pok/adapter.py"]
+  
+  send_cont:
+    # image: rhamqor.bi
+    restart: 'no'
+    environment:
+      - TZ=Europe/Moscow
+      - LOG_LEVEL_ENV=DEBUG
+    command: ["python", "/opt/pok/progs/test/loop.py"]
+    network_mode: "host"
+    volumes:
+      - ./:/opt/pok/progs:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "25m"
+        max-file: "20"
+
+  send_cont2:
+    # image: rhamqor.bi
+    restart: 'no'
+    command: ["python", "/opt/pok/progs/test/loop.py"]
+    network_mode: "host"
+    volumes:
+      - ./:/opt/pok/progs:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "25m"
+        max-file: "20"

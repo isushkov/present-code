@@ -1,0 +1,40 @@
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr class="b-pr">
+            <th colspan="3"><p class="m-0 text-center">Teo budget</p></th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>Turn</th>
+            <th>Reserve</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Incomes</td>
+            <td class="c-success">+{{ teoBudget.incomes }}</td>
+            <td class="success">+{{ teoBudget.reserve }}</td>
+        </tr>
+        <tr>
+            <td>Expenses</td>
+            <td colspan="2" class="danger">-{{ teoBudget.expenses}}</td>
+        </tr>
+        {% for expensesItem in teoBudget.detailExpenses %}
+            <tr>
+                <td><p class="text-right p-0 m-0">{{ expensesItem.description }}</p></td>
+                <td colspan="2">
+                    {% if expensesItem.multi != 1 %}
+                        <span class="c-warning">-{{ expensesItem.amount }}</span>
+                        <span class="c-warning">x{{ expensesItem.multi }}</span>
+                        =
+                    {% endif %}
+                    <span class="c-danger">-{{ expensesItem.result }}</span>
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td>Free money</td>
+            <td class="success" colspan="2">{{ teoBudget.freeMoney }}</td>
+        </tr>
+    </tbody>
+</table>

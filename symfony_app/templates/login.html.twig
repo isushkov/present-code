@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Home{% endblock %}</title>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        <div id="app">
+            <nav class="navbar navbar-expand shadow-sm p-0">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item {% if app.request.get('_route') == 'app_home_index' %}active{% endif %}">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item {% if app.request.get('_route') == 'app_hronos_index' %}active{% endif %}">
+                            <a class="nav-link" href="/hronos">Hronos</a>
+                        </li>
+                        <li class="nav-item {% if app.request.get('_route') == 'app_regtrans_index' %}active{% endif %}">
+                            <a class="nav-link" href="/regtrans">Reg-transactions</a>
+                        </li>
+                        <li class="nav-item {% if app.request.get('_route') == 'app_graph_index' %}active{% endif %}">
+                            <a class="nav-link" href="/graph">Graph</a>
+                        </li>
+                    </ul>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item {% if app.request.get('_route') == 'app_user_index' %}active{% endif %}">
+                            <a class="nav-link" href="/user">{{ user.email }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            {% block body %}{% endblock %}
+        </div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </body>
+</html>

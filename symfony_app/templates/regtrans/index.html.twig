@@ -1,0 +1,161 @@
+{% extends 'login.html.twig' %}
+{% block title %}Regular transactions{% endblock %}
+{% block body %}
+<div class="card">
+    <div class="card-body">
+        {% for i in 1..2 %}
+            {% if (incomes[0] is defined and expenses[0] is defined) %}
+
+                {% if (i == 1) %}
+                    {% set transactions = incomes %}
+                {% else %}
+                    {% set transactions = expenses %}
+                {% endif %}
+                <table class="table table-sm table-hover table-bordered" data-typetransactions="{{ transactions[0].typeTransaction }}">
+                    <thead>
+                        <tr class="b-pr">
+                            <th colspan="6">
+                                <p class="m-0 text-center">
+                                    {% if (i == 1) %}
+                                        Incomes
+                                    {% else %}
+                                        Expenses
+                                    {% endif %}
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Cyclicity</th>
+                            <th>Day</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Show on homepage</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in transactions %}
+                            <tr data-row="{{ item.id }}">
+                                <td data-column="cyclicity">
+                                    {{ item.cyclicity }}
+                                </td>
+                                <td data-column="day">
+                                    {{ item.day }}
+                                </td>
+                                <td data-column="amount">
+                                    {{ item.amount }}
+                                </td>
+                                <td data-column="description">
+                                    {{ item.description }}
+                                </td>
+                                <td data-column="show-on-homepage">
+                                    {% if (item.showOnHomePage) %}
+                                        yes
+                                    {% else %}
+                                        no
+                                    {% endif %}
+                                </td>
+                                <td data-column="actions">
+                                    <button type="button" class="btn btn-outline-danger btn-sm remove w-100">Remove</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr data-row="input">
+                            <td data-column="cyclicity">
+                                <select class="form-control form-control-sm">
+                                    <option selected="selected">e_month</option>
+                                    <option>e_week</option>
+                                    <option>e_day</option>
+                                </select>
+                            </td>
+                            <td data-column="day" class="col-1">
+                                <input class="form-control form-control-sm" type="text">
+                                <span class="hidden default-eday">each</span>
+                            </td>
+                            <td data-column="amount">
+                                <input class="form-control form-control-sm" type="text">
+                            </td>
+                            <td data-column="description">
+                                <input class="form-control form-control-sm" type="text">
+                            </td>
+                            <td data-column="show-on-homepage">
+                                <select class="form-control form-control-sm">
+                                    <option selected="selected">no</option>
+                                    <option>yes</option>
+                                </select>
+                            </td>
+                            <td data-column="actions">
+                                <button type="button" class="btn btn-outline-success btn-sm add w-100">Add</button>
+                            </td>
+                        </tr>
+                        <tr data-row="error-wrapper">
+                            <td colspan="6" class="table-danger p-0"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            {% else %}
+
+                {% if (i == 1) %}
+                    {% set transactions = 'incomes' %}
+                {% else %}
+                    {% set transactions = 'expenses' %}
+                {% endif %}
+                <table class="table table-sm table-bordered" data-typetransactions="{{ transactions }}">
+                    <thead>
+                        <tr class="b-pr">
+                            <th colspan="6">
+                                <p class="m-0 text-center">
+                                    {{ transactions }}
+                                </p>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Cyclicity</th>
+                            <th>Day</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Show on homepage</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-row="input">
+                            <td data-column="cyclicity">
+                                <select class="form-control form-control-sm">
+                                    <option selected="selected">e_month</option>
+                                    <option>e_week</option>
+                                    <option>e_day</option>
+                                </select>
+                            </td>
+                            <td data-column="day" class="col-1">
+                                <input class="form-control form-control-sm" type="text">
+                                <span class="hidden default-eday">each</span>
+                            </td>
+                            <td data-column="amount">
+                                <input class="form-control form-control-sm" type="text">
+                            </td>
+                            <td data-column="description">
+                                <input class="form-control form-control-sm" type="text">
+                            </td>
+                            <td data-column="show-on-homepage">
+                                <select class="form-control form-control-sm">
+                                    <option selected="selected">no</option>
+                                    <option>yes</option>
+                                </select>
+                            </td>
+                            <td data-column="actions">
+                                <button type="button" class="btn btn-outline-success btn-sm add w-100">Add</button>
+                            </td>
+                        </tr>
+                        <tr data-row="error-wrapper">
+                            <td colspan="6" class="table-danger p-0"></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock%}

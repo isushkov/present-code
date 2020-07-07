@@ -1,0 +1,27 @@
+{% extends 'nologin.html.twig' %}
+{% block title %}Start{% endblock %}
+{% block body %}
+<main class="py-4">
+    <div class="card-fliud">
+        <div class="card-body pr-0 pb-2">
+            <div class="row">
+                <div class="col text-right">
+                    <a class="card-link" href="register">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title text-center">
+                <h5>Get started</h5>
+            </div>
+            <div class="clop mp-0">
+                <p class="text-center">Cколько денег у Вас сейчас?</p>
+                <input class="form-control form-control-sm my-2" id="tih" type="text">
+                <button type="button" class="btn btn-outline-success btn-sm w-100" id="add-budget">Add</button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
